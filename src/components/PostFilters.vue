@@ -22,7 +22,6 @@ defineEmits(['search'])
   justify-content: center;
   margin-bottom: 1.5rem;
 }
-</style>
 
 input {
   padding: 0.6rem 1rem;
@@ -39,4 +38,8 @@ input {
 input::placeholder {
   color: #999;
 }
+
+</style>
+
+
 

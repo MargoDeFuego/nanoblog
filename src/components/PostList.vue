@@ -2,13 +2,14 @@
   <section class="post-list">
     <div v-if="posts.length === 0">Нет постов для отображения</div>
     <PostItem
-      v-else
-      v-for="post in posts"
-      :key="post.id"
-      :post="post"
-      @edit="$emit('edit', post.id)"
-      @delete="$emit('delete', post.id)"
-    />
+  v-else
+  v-for="post in posts"
+  :key="post.id"
+  :post="post"
+  @edit="$emit('edit', post)"      
+  @delete="$emit('delete', post.id)"
+  />
+
   </section>
 </template>
 
@@ -27,6 +28,15 @@ defineEmits(['edit', 'delete'])
 </script>
 
 <style scoped>
+form {
+display: flex;
+width: 100%;
+max-width: 900px;
+flex-direction: column;
+justify-content: center;
+margin: 0 auto;
+}
+
 .post-list {
   display: flex;
   flex-direction: column;
