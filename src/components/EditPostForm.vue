@@ -49,3 +49,19 @@ const submit = async () => {
   loading.value = false
 }
 </script>
+
+<style scoped>
+form {
+display: flex;
+width: 100%;
+max-width: 600px;
+flex-direction: column;
+justify-content: center;
+margin: 0 auto 60px;
+gap: 20px;
+}
+textarea{
+  height: 150px;
+}
+
+</style>

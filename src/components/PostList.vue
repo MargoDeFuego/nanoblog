@@ -42,4 +42,7 @@ margin: 0 auto;
   flex-direction: column;
   gap: 1rem;
 }
+
+
+
 </style>
