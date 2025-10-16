@@ -4,7 +4,7 @@ import { ref, computed, onMounted, nextTick } from 'vue'
 
 import PostList from './components/PostList.vue'
 import NewPostForm from './components/NewPostForm.vue'
-import PostFilters from './components/PostFilters.vue'
+//import PostFilters from './components/PostFilters.vue'
 import EditPostForm from './components/EditPostForm.vue'
 
 const posts = ref<any[]>([])
