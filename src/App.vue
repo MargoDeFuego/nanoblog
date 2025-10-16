@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
-// Импортируем компоненты
+
 import PostList from './components/PostList.vue'
 import NewPostForm from './components/NewPostForm.vue'
 import PostFilters from './components/PostFilters.vue'
@@ -10,7 +10,6 @@ import EditPostForm from './components/EditPostForm.vue'
 const posts = ref<any[]>([])
 const searchQuery = ref('')
 
-// Функция для получения постов
 const fetchPosts = async () => {
   try {
     const res = await fetch('/api/posts')
@@ -24,7 +23,6 @@ const fetchPosts = async () => {
   }
 }
 
-// Фильтрация постов по поисковому запросу
 const filteredPosts = computed(() =>
   posts.value.filter(p =>
     p.title.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -32,20 +30,18 @@ const filteredPosts = computed(() =>
 )
 
 
-// Функция для удаления поста
 const deletePost = async (id: number) => {
   await fetch(`http://localhost:3000/posts/${id}`, { method: 'DELETE' })
   fetchPosts()
 }
 
-// Выбор редактируемого поста
 const selectedPost = ref<any | null>(null)
 const editPost = async (post: any) => {
   selectedPost.value = post
   try {
     const updatedPost = {
       ...post,
-      title: post.title + ' (обновлено)', 
+      title: post.title + '...', 
       updatedAt: new Date().toISOString()
     }
 
@@ -57,17 +53,16 @@ const editPost = async (post: any) => {
       body: JSON.stringify(updatedPost)
     })
 
-    await fetchPosts() // обновляем список после редактирования
+    await fetchPosts() 
   } catch (error) {
     console.error('Ошибка при редактировании поста:', error)
   }
 }
 
-// Сброс selectedPost и обновление постов
 const onPostUpdated = async () => {
   console.log('Форма скрыта')
   selectedPost.value = null
-  await nextTick(fetchPosts)  // Ожидаем обновления DOM перед вызовом fetchPosts
+  await nextTick(fetchPosts) 
 }
 
 onMounted(fetchPosts)

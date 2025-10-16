@@ -8,9 +8,9 @@
         "id": 1,
         "name": "Margo"
       },
-      "createdAt": "2025-10-10T08:28:16.846Z",
+      "createdAt": "2025-10-12T13:09:00.000Z",
       "published": true,
-      "updatedAt": "2025-10-10T08:30:54.602Z"
+      "updatedAt": "2025-10-16T20:57:42.235Z"
     },
     {
       "id": "9ac9",
@@ -20,9 +20,9 @@
         "id": 1,
         "name": "Margo"
       },
-      "createdAt": "2025-10-10T08:28:51.743Z",
+      "createdAt": "2025-10-10T02:28:00.000Z",
       "published": true,
-      "updatedAt": "2025-10-10T15:18:32.225Z"
+      "updatedAt": "2025-10-16T20:50:38.007Z"
     },
     {
       "id": "260e",
@@ -32,8 +32,9 @@
         "id": 1,
         "name": "Margo"
       },
-      "createdAt": "2025-10-10T08:30:11.258Z",
-      "published": true
+      "createdAt": "2025-10-09T23:30:00.000Z",
+      "published": true,
+      "updatedAt": "2025-10-16T20:50:42.918Z"
     },
     {
       "id": "6e44",
