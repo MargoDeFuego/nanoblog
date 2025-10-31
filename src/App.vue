@@ -2,8 +2,9 @@
 <template>
   <nav>
     <router-link to="/">🏠 Панель</router-link>
-    <router-link to="/editor">🎨 Редактор палитр</router-link>
+    <router-link to="/editor">🎨 Создание палитры</router-link>
     <router-link to="/harmony">🌈 Цветовые гармонии</router-link>
+    <router-link to="/accessibility">🧩 Проверка доступности</router-link>
   </nav>
   <router-view />
 </template>

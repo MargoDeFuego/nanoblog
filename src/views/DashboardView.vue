@@ -15,7 +15,7 @@
     <button @click="remove(palette.id)">🗑 Удалить</button>
     <div>{{ console.log('ID:', palette.id) }}</div>
   </li>
-</ul>в
+</ul>
   </section>
 </template>
 

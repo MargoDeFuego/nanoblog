@@ -3,4 +3,6 @@ export interface ColorPalette {
   id: string;
   name: string;
   colors: Color[];
+  
 }
+export type { Color }

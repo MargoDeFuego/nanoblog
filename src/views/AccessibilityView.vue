@@ -1,37 +1,68 @@
 <template>
-  <section>
-    <h1>Проверка доступности</h1>
-    <input v-model="hex1" placeholder="#000000" />
-    <input v-model="hex2" placeholder="#ffffff" />
-    <button @click="check">Проверить</button>
+  <section class="p-6 max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">🧩 Проверка доступности (WCAG контраст)</h1>
 
-    <div v-if="ratio !== null">
-      <p>Коэффициент контрастности: {{ ratio.toFixed(2) }}</p>
-      <p v-if="ratio >= 4.5">✅ Проходит WCAG AA</p>
-      <p v-else>❌ Недостаточный контраст</p>
+    <div class="flex flex-col sm:flex-row items-center gap-4 mb-6">
+      <div class="flex items-center gap-2">
+        <label class="w-20">Фон:</label>
+        <input type="color" v-model="bgHex" class="w-12 h-12 border rounded" />
+        <input type="text" v-model="bgHex" class="border p-2 rounded w-28" />
+      </div>
+
+      <div class="flex items-center gap-2">
+        <label class="w-20">Текст:</label>
+        <input type="color" v-model="textHex" class="w-12 h-12 border rounded" />
+        <input type="text" v-model="textHex" class="border p-2 rounded w-28" />
+      </div>
+
+      <button
+        @click="checkContrast"
+        class="bg-blue-600 text-white px-4 py-2 rounded shadow"
+      >
+        Проверить
+      </button>
+    </div>
+
+    <div
+      v-if="result"
+      class="p-6 rounded-lg shadow text-center"
+      :style="{ backgroundColor: bgHex, color: textHex }"
+    >
+      <p class="text-lg font-bold mb-2">Тестовая надпись</p>
+      <p>Коэффициент контраста: {{ result.ratio }}:1</p>
+      <p :class="{ 'text-green-700': result.wcagAA, 'text-red-700': !result.wcagAA }">
+        WCAG AA: {{ result.wcagAA ? '✅ проходит' : '❌ не проходит' }}
+      </p>
+      <p :class="{ 'text-green-700': result.wcagAAA, 'text-red-700': !result.wcagAAA }">
+        WCAG AAA: {{ result.wcagAAA ? '✅ проходит' : '❌ не проходит' }}
+      </p>
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { hexToRgb, rgbToHsl } from '@/utils/colorConversion';
-import { getContrastRatio } from '@/utils/contrast';
-import type { Color } from '@/types/color';
+import { ref } from 'vue'
+import { hexToRgb } from '@/utils/colorConversion'
+import { contrastRatio } from '@/utils/contrast'
 
-const hex1 = ref('#000000');
-const hex2 = ref('#ffffff');
-const ratio = ref<number | null>(null);
+type ContrastResult = {
+  ratio: number
+  wcagAA: boolean // >= 4.5
+  wcagAAA: boolean // >= 7
+}
 
-function check() {
-  const rgb1 = hexToRgb(hex1.value);
-  const rgb2 = hexToRgb(hex2.value);
-  const hsl1 = rgbToHsl(rgb1.r, rgb1.g, rgb1.b);
-  const hsl2 = rgbToHsl(rgb2.r, rgb2.g, rgb2.b);
+const bgHex = ref('#ffffff')
+const textHex = ref('#000000')
+const result = ref<ContrastResult | null>(null)
 
-  const color1: Color = { id: '1', hex: hex1.value, rgb: rgb1, hsl: hsl1 };
-  const color2: Color = { id: '2', hex: hex2.value, rgb: rgb2, hsl: hsl2 };
-
-  ratio.value = getContrastRatio(color1, color2);
+function checkContrast() {
+  const bg = hexToRgb(bgHex.value)
+  const text = hexToRgb(textHex.value)
+  const ratio = contrastRatio(bg, text)
+  result.value = {
+    ratio,
+    wcagAA: ratio >= 4.5,
+    wcagAAA: ratio >= 7,
+  }
 }
 </script>
