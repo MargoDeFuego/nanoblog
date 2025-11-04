@@ -13,7 +13,6 @@
     </div>
     <router-link :to="`/editor/${palette.id}`">✏️ Редактировать</router-link>
     <button @click="remove(palette.id)">🗑 Удалить</button>
-    <div>{{ console.log('ID:', palette.id) }}</div>
   </li>
 </ul>
   </section>
@@ -24,6 +23,7 @@
   display: flex;
   list-style: none;
   flex-direction: column;
+  gap:10px;
 
 }
 .control_panel li{

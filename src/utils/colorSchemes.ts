@@ -15,20 +15,29 @@ export function generateColorSchemes(input: Color | HSL) {
   const wrap = (v: number) => (v + 360) % 360
   const { h, s, l } = baseHsl
 
-  const complementaryHsl: HSL[] = [{ h: wrap(h + 180), s, l }]
+  // схемы
+  const complementaryHsl: HSL[] = [
+    baseHsl,
+    { h: wrap(h + 180), s, l }
+  ]
+
   const analogousHsl: HSL[] = [
+    baseHsl,
     { h: wrap(h - 30), s, l },
     { h: wrap(h + 30), s, l }
   ]
+
   const triadicHsl: HSL[] = [
+    baseHsl,
     { h: wrap(h + 120), s, l },
     { h: wrap(h + 240), s, l }
   ]
 
+  // конвертация в Color[]
   function enrich(list: HSL[]): Color[] {
     return list.map(c => {
-      const rgb = hslToRgb(c)   // предполагается: hslToRgb({h,s,l}) -> {r,g,b}
-      const hex = rgbToHex(rgb) // rgbToHex({r,g,b}) -> "#rrggbb"
+      const rgb = hslToRgb(c)
+      const hex = rgbToHex(rgb)
       return {
         id: crypto.randomUUID(),
         hex,
