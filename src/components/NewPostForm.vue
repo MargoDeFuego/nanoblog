@@ -116,7 +116,7 @@ const submit = async () => {
     authorName.value = ''
     createdAt.value = new Date()
   } catch (error) {
-    errorMessage.value = 'Ошибка при отправке. Попробуйте ещё раз.'
+    errorMessage.value = '⚠️ Сервер недоступен. Попробуйте позже.'
   } finally {
     loading.value = false
   }

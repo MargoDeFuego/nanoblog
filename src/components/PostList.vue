@@ -11,15 +11,15 @@
         :key="post.id"
         :post="post"
         @delete="handleDelete"
+        @edit="handleEdit"
         @updated="refreshPosts"
       />
     </div>
   </section>
 </template>
 
-
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import PostItem from './PostItem.vue'
 import PostFilter from './PostFilters.vue'
 
@@ -27,45 +27,46 @@ type Post = {
   id: number
   title: string
   content: string
-  author: {
-    id: number
-    name: string
-  }
+  author: { id: number; name: string }
   createdAt: string
   updatedAt?: string
 }
 
-const posts = ref<Post[]>([])
-const filteredPosts = ref<Post[]>([])
+// ✅ Получаем список постов от родителя
+const props = defineProps<{
+  posts: Post[]
+}>()
 
-const fetchPosts = async () => {
-  const res = await fetch('http://localhost:3000/posts')
-  const data = await res.json()
-  posts.value = data
-  filteredPosts.value = data // начальное значение
-}
+const emit = defineEmits(['delete', 'edit', 'refresh'])
 
-onMounted(fetchPosts)
-const handleSearch = (query: string) => {
-  const lower = query.toLowerCase()
-  filteredPosts.value = posts.value.filter(post =>
-    post.title.toLowerCase().includes(lower)
+const searchQuery = ref('')
+
+// ✅ фильтрация — работает локально, без загрузки
+const filteredPosts = computed(() =>
+  props.posts.filter(post =>
+    post.title.toLowerCase().includes(searchQuery.value.toLowerCase())
   )
-}
-const refreshPosts = async () => {
-  await fetchPosts()
+)
+
+const handleSearch = (query: string) => {
+  searchQuery.value = query
 }
 
-const handleDelete = async (id: number) => {
-  await fetch(`http://localhost:3000/posts/${id}`, {
-    method: 'DELETE'
-  })
-  await fetchPosts()
+const handleEdit = (post: any) => {
+  console.log('🖊️ [PostList] handleEdit triggered with:', post)
+  emit('edit', post) // пробрасываем событие вверх в App.vue
+}
+
+const handleDelete = (id: number) => {
+  emit('delete', id)
+}
+
+const refreshPosts = () => {
+  emit('refresh')
 }
 </script>
 
 <style scoped>
-
 .post-list {
   display: flex;
   flex-direction: column;

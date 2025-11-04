@@ -6,7 +6,7 @@
       <p class="meta">👤 Автор: {{ post.author.name }}</p>
       <p class="meta">🕒 Дата: {{ formattedDate }}</p>
       <div class="actions">
-        <button @click="editing = true">Редактировать</button>
+        <button @click="startEditing">Редактировать</button>
         <button @click="$emit('delete', post.id)">Удалить</button>
       </div>
     </template>
@@ -37,6 +37,13 @@ function toLocalDateTimeInput(isoString: string): string {
 }
 
 
+const startEditing = () => {
+  editing.value = true
+  console.log('🖊️ [PostItem] startEditing', props.post.id)
+  emit('edit', props.post) // 🚀 отправляем наверх пост
+}
+
+
 const props = defineProps<{
   post: {
     id: number
@@ -50,7 +57,7 @@ const props = defineProps<{
   }
 }>()
 
-const emit = defineEmits(['delete', 'updated']) // ✅ добавлено событие updated
+const emit = defineEmits(['delete', 'updated', 'edit']) // ✅ добавлено событие updated
 
 const editing = ref(false)
 const loading = ref(false)
