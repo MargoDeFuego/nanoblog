@@ -43,6 +43,25 @@
         WCAG AAA: {{ result.wcagAAA ? '✅ проходит' : '❌ не проходит' }}
       </p>
     </div>
+
+    <!-- Всегда видимый блок с результатами -->
+<div
+  v-if="result"
+  class="mt-4 p-4 rounded border bg-white text-gray-900 shadow max-w-md mx-auto"
+>
+  <h2 class="text-lg font-semibold mb-2">Результаты WCAG</h2>
+  <p>Коэффициент контраста: <b>{{ result.ratio.toFixed(2) }}</b>:1</p>
+
+  <p :class="{ 'text-green-700': result.wcagAA, 'text-red-700': !result.wcagAA }">
+    WCAG AA: {{ result.wcagAA ? '✅ проходит' : '❌ не проходит' }}
+  </p>
+
+  <p :class="{ 'text-green-700': result.wcagAAA, 'text-red-700': !result.wcagAAA }">
+    WCAG AAA: {{ result.wcagAAA ? '✅ проходит' : '❌ не проходит' }}
+  </p>
+</div>
+
+
   </section>
 </template>
 

@@ -246,7 +246,6 @@ function onPointerUp(e: PointerEvent) {
 
 /* --- обновление схемы (внутренний, принимает hue чтобы не переопределять) --- */
 function updateSchemeInternal(optionalHue?: number) {
-  // если optionalHue задан — используем его, иначе берем из baseHex
   let hue: number
   if (typeof optionalHue === 'number') hue = optionalHue
   else {
@@ -329,7 +328,7 @@ input[type='range'] {
   accent-color: #3b82f6;
 }
 .grid div {
-  min-height: 100px;
+  min-height: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
