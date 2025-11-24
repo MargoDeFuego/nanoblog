@@ -50,4 +50,20 @@ describe('ColorSwatch.vue', () => {
     // ✅ Assert
     expect(div.attributes('title')).toBe(colorHex)
   })
+
+  // 🆕 Новый тест — посмотрим вычисление computed "dark"
+  it('лог вычисления dark', () => {
+    // 🧩 Arrange
+    const wrapper = mount(ColorSwatch, {
+      props: {
+        color: { hex: '#000000' } // черный = тёмный
+      }
+    })
+
+    // ⚙️ Act + лог
+    console.log('computed dark =', wrapper.vm.dark)
+
+    // ✅ Assert
+    expect(wrapper.vm.dark).toBe(true)
+  })
 })
